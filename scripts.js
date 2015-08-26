@@ -35,21 +35,40 @@ function initialize() {
 }
 
 function loadHills() {
-    importGpx(gpx[0]);
+    $.each(hills, function(i, v) {
+        var points = extractGpx(gpx[i]);
+        drawPoly(points);
+
+        var infoContent = '<h1>' + v.name + '</h1><b>Busstop:</b> ' + v.busstop + '<br /><b>Info:</b> ' + v.extra;
+        var infoWindow = new google.maps.InfoWindow({
+            content: infoContent
+        });
+
+        var marker = new google.maps.Marker({
+            position: points[0],
+            map: map,
+            title: v.name
+        });
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+    });
 }
 
-function importGpx(xml) {
+function extractGpx(xml) {
     var points = [];
-    var bounds = new google.maps.LatLngBounds ();
     $(xml).find("trkpt").each(function() {
         var lat = $(this).attr("lat");
         var lon = $(this).attr("lon");
         var p = new google.maps.LatLng(lat, lon);
         points.push(p);
-        bounds.extend(p);
     });
 
-    var poly = new google.maps.Polyline({
+    return points;
+}
+
+function drawPoly(points) {
+    new google.maps.Polyline({
         path: points,
         strokeColor: "#FF00AA",
         strokeOpacity: .7,
@@ -57,3 +76,4 @@ function importGpx(xml) {
         map: map
     });
 }
+
