@@ -1,5 +1,10 @@
 var map;
 
+$(function() {
+    initialize();
+    loadHills();
+});
+
 function initialize() {
     var mapCanvas = document.getElementById('map');
     var mapOptions = {
@@ -29,4 +34,26 @@ function initialize() {
     map = new google.maps.Map(mapCanvas, mapOptions);
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+function loadHills() {
+    importGpx(gpx[0]);
+}
+
+function importGpx(xml) {
+    var points = [];
+    var bounds = new google.maps.LatLngBounds ();
+    $(xml).find("trkpt").each(function() {
+        var lat = $(this).attr("lat");
+        var lon = $(this).attr("lon");
+        var p = new google.maps.LatLng(lat, lon);
+        points.push(p);
+        bounds.extend(p);
+    });
+
+    var poly = new google.maps.Polyline({
+        path: points,
+        strokeColor: "#FF00AA",
+        strokeOpacity: .7,
+        strokeWeight: 3,
+        map: map
+    });
+}
