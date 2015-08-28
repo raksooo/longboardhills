@@ -86,6 +86,8 @@ var _overlayHandler = require('./overlayHandler');
 
 var _mapHandler = require('./mapHandler');
 
+var difficultyColors = ["#2E7D32", "#558B2F", "#9E9D24", "#F9A825", "#FF8F00", "#EF6C00", "#D84315", "#C62828", "#283593", "#111111"];
+
 var HillLoader = (function () {
     function HillLoader() {
         _classCallCheck(this, HillLoader);
@@ -108,7 +110,11 @@ var HillLoader = (function () {
     }, {
         key: 'loadHill',
         value: function loadHill(hill) {
-            var line = this.drawPoly(hill.path);
+            // TODO: Ta bort senare när formuläret är fixat.
+            if (hill.difficulty === "") {
+                hill.difficulty = 1;
+            }
+            var line = this.drawPoly(hill.path, hill.difficulty);
 
             var infoContent = '<h1 id="firstHeading" class="firstHeading">' + hill.name + '</h1><p>' + '<b>Distance:</b> ' + hill.distance + '<br />' + '<b>Decline:</b> ' + hill.decline + 'm<br />' + '<b>Busstop:</b> ' + hill.busstop + '<br />' + '<b>Difficulty:</b> ' + hill.difficulty + '/10<br />' + '<b>Traffic:</b> ' + hill.traffic + '/10<br />' + '<b>Info:</b> ' + hill.extra + '</p>';
             var infoWindow = new google.maps.InfoWindow({
@@ -130,10 +136,10 @@ var HillLoader = (function () {
         }
     }, {
         key: 'drawPoly',
-        value: function drawPoly(points) {
+        value: function drawPoly(points, difficulty) {
             var line = new google.maps.Polyline({
                 path: points,
-                strokeColor: "#FF00AA",
+                strokeColor: difficultyColors[difficulty - 1],
                 strokeOpacity: .7,
                 strokeWeight: 3,
                 map: this.mapHandler.map

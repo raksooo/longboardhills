@@ -1,6 +1,19 @@
 import {OverlayHandler} from './overlayHandler';
 import {MapHandler} from './mapHandler';
 
+var difficultyColors = [
+    "#2E7D32",
+    "#558B2F",
+    "#9E9D24",
+    "#F9A825",
+    "#FF8F00",
+    "#EF6C00",
+    "#D84315",
+    "#C62828",
+    "#283593",
+    "#111111"
+];
+
 export class HillLoader {
     constructor() {
         this.mapHandler = MapHandler.getMapHandler();
@@ -16,7 +29,11 @@ export class HillLoader {
     }
 
     loadHill(hill) {
-        let line = this.drawPoly(hill.path);
+        // TODO: Ta bort senare när formuläret är fixat.
+        if (hill.difficulty === "") {
+            hill.difficulty = 1;
+        }
+        let line = this.drawPoly(hill.path, hill.difficulty);
 
         let infoContent = '<h1 id="firstHeading" class="firstHeading">' + hill.name + '</h1><p>' +
             '<b>Distance:</b> ' + hill.distance + '<br />' +
@@ -43,10 +60,10 @@ export class HillLoader {
         this.overlayHandler.addHill(hill, open);
     }
 
-    drawPoly(points) {
+    drawPoly(points, difficulty) {
         let line = new google.maps.Polyline({
             path: points,
-            strokeColor: "#FF00AA",
+            strokeColor: difficultyColors[difficulty - 1],
             strokeOpacity: .7,
             strokeWeight: 3,
             map: this.mapHandler.map
