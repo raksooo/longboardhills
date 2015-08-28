@@ -1,5 +1,4 @@
 var storage = require('node-persist'),
-    sassMiddleware = require('node-sass-middleware'),
     path = require('path'),
     bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
@@ -7,16 +6,7 @@ var storage = require('node-persist'),
     app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(sassMiddleware({
-    src: path.join(__dirname, 'src'),
-    dest: path.join(__dirname, 'build', 'styles'),
-    force: true,
-    debug: true,
-    outputStyle: 'compressed',
-    prefix: '/styles'
-}));
-// TODO: Flytta upp nedanstående så att inte scss:en kompileras varje sidhämtning
-app.use('/script', serveStatic(__dirname + "/build/"));
+app.use('/build', serveStatic(__dirname + "/build/"));
 app.use('/', serveStatic(__dirname + "/src/"));
 
 storage.initSync({
