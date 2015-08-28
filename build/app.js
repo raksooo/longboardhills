@@ -245,6 +245,8 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+var _mapHandler = require('./mapHandler');
+
 var overlayHandlerInstance;
 
 var OverlayHandler = (function () {
@@ -267,6 +269,7 @@ var OverlayHandler = (function () {
         key: 'selectHill',
         value: function selectHill(i) {
             overlayHandlerInstance.hills[i].fn();
+            _mapHandler.MapHandler.getMapHandler().map.setCenter(overlayHandlerInstance.hills[i].hill.path[0]);
         }
     }, {
         key: 'getOverlayHandler',
@@ -295,7 +298,7 @@ exports.OverlayHandler = OverlayHandler;
 
 window.overlayHandler = OverlayHandler;
 
-},{}],6:[function(require,module,exports){
+},{"./mapHandler":4}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

@@ -1,3 +1,4 @@
+import {MapHandler} from './mapHandler';
 
 var overlayHandlerInstance;
 
@@ -16,6 +17,7 @@ export class OverlayHandler {
 
     static selectHill(i) {
         overlayHandlerInstance.hills[i].fn();
+        MapHandler.getMapHandler().map.setCenter(overlayHandlerInstance.hills[i].hill.path[0]);
     }
 
     static getOverlayHandler() {
