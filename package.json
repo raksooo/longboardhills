@@ -1,0 +1,17 @@
+{
+    "name": "LongboardHills",
+    "devDependencies": {
+        "node-persist": "latest",
+        "node-sass-middleware": "latest",
+        "path": "latest",
+        "body-parser": "latest",
+        "server-static": "latest",
+        "express": "latest"
+    },
+    "scripts": {
+        "build": "browserify static/main.js -t babelify -o build/app.js",
+        "watch-js": "watchify static/main.js -t babelify -o build/app.js",
+        "watch": "npm run watch-js & npm start",
+        "start": "babel-node server.js"
+    }
+}
