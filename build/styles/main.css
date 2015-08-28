@@ -41,6 +41,7 @@
       max-height: 0;
       margin-bottom: 0; }
     #overlay ul li {
+      position: relative;
       padding: 10px 30px;
       cursor: pointer;
       font-family: Roboto;
@@ -52,14 +53,23 @@
         background: #80CBC4; }
       #overlay ul li:first-child {
         padding-top: 12px; }
+      #overlay ul li div {
+        position: absolute;
+        right: 20px;
+        width: 12px;
+        height: 5px;
+        opacity: 0.8;
+        top: 50%;
+        transform: translateY(-50%); }
 
 #newHillForm {
   display: none;
   position: absolute;
   width: 300px;
-  top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
+  top: 50%;
+  transform: translateY(-50%);
   background: white;
   padding: 50px; }
   #newHillForm span {

@@ -12,7 +12,7 @@ export class OverlayHandler {
         let id = this.hills.length;
         this.hills.push({hill: hill, fn: fn});
 
-        this.element.find('ul').append('<li onclick="OverlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
+        this.element.find('ul').append('<li onclick="OverlayHandler.selectHill(' + id + ');">' + hill.name + '<div style="background: ' + difficultyColors[hill.difficulty-1] + '"> </div></li>');
     }
 
     static selectHill(i) {

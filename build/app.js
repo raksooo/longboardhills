@@ -86,7 +86,7 @@ var _overlayHandler = require('./overlayHandler');
 
 var _mapHandler = require('./mapHandler');
 
-var difficultyColors = ["#2E7D32", "#558B2F", "#9E9D24", "#F9A825", "#FF8F00", "#EF6C00", "#D84315", "#C62828", "#283593", "#111111"];
+window.difficultyColors = ["#2E7D32", "#558B2F", "#9E9D24", "#F9A825", "#FF8F00", "#EF6C00", "#D84315", "#C62828", "#283593", "#111111"];
 
 var HillLoader = (function () {
     function HillLoader() {
@@ -261,7 +261,7 @@ var OverlayHandler = (function () {
             var id = this.hills.length;
             this.hills.push({ hill: hill, fn: fn });
 
-            this.element.find('ul').append('<li onclick="OverlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
+            this.element.find('ul').append('<li onclick="OverlayHandler.selectHill(' + id + ');">' + hill.name + '<div style="background: ' + difficultyColors[hill.difficulty - 1] + '"> </div></li>');
         }
     }], [{
         key: 'selectHill',

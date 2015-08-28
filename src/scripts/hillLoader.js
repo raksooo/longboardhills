@@ -1,7 +1,7 @@
 import {OverlayHandler} from './overlayHandler';
 import {MapHandler} from './mapHandler';
 
-var difficultyColors = [
+window.difficultyColors = [
     "#2E7D32",
     "#558B2F",
     "#9E9D24",
