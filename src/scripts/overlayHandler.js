@@ -11,11 +11,11 @@ export class OverlayHandler {
         let id = this.hills.length;
         this.hills.push({hill: hill, fn: fn});
 
-        this.element.append('<li onclick="overlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
+        this.element.find('ul').append('<li onclick="overlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
     }
 
     static selectHill(i) {
-        console.log(overlayHandlerInstance.hills[i].fn());
+        overlayHandlerInstance.hills[i].fn();
     }
 
     static getOverlayHandler() {

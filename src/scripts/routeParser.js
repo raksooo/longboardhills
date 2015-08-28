@@ -46,37 +46,53 @@ function getPath(instructions, callback) {
 function calculateElevation(directions, callback) {
     var locations = {locations: [directions.origin, directions.destination]};
     elevator.getElevationForLocations(locations, function(elevation, eStatus) {
-        var decline = Math.round(Math.abs(elevation[0].elevation - elevation[1].elevation)) + 'm';
+        var decline = Math.round(Math.abs(elevation[0].elevation - elevation[1].elevation));
         callback(decline);
     });
 }
 
+function isFloat(str) {
+    return !isNaN(str) && str.toString().indexOf('.') != -1;
+}
+
 function gMapsUrlPointParser(url, callback) {
-    let directions = {};
+    let directions = {
+        origin: {},
+        destination: {},
+        waypoints: []
+    };
     url = url.substring(url.indexOf("/maps/dir/") + "/maps/dir/".length);
     let urlComponents = url.split('/');
 
-    directions.destination = {};
-    let dest = urlComponents[1].split(',');
-    directions.destination.lat = parseFloat(dest[0]);
-    directions.destination.lng = parseFloat(dest[1]);
+    let first = urlComponents[0].split(',');
+    let second = urlComponents[1].split(',');
+    if (first.length === 2 && isFloat(first[0]) && isFloat(first[1])) {
+        directions['origin'].lat = parseFloat(first[0]);
+        directions['origin'].lng = parseFloat(first[1]);
+    }
+    if (second.length === 2 && isFloat(second[0]) && isFloat(second[1])) {
+        directions['destination'].lat = parseFloat(second[0]);
+        directions['destination'].lng = parseFloat(second[1]);
+    }
 
-    directions.waypoints = [];
     let data = urlComponents[3];
-    let index = 0;
-    while ((index = data.indexOf('!1d')) !== -1) {
-        data = data.substring(index + '!1d'.length);
+    while (data.indexOf('!1d') !== -1) {
+        data = data.substring(data.indexOf('!1d') + '!1d'.length);
         var lng = data.substring(0, data.indexOf('!'));
         lng = parseFloat(lng);
         data = data.substring(data.indexOf('!2d') + '!2d'.length);
         var lat = data.substring(0, data.indexOf('!'));
         lat = parseFloat(lat);
 
-        if (directions.origin) {
-            directions.waypoints.push({location: {lat: lat, lng: lng}, stopover: false});
-        } else {
+        if (directions.origin.lat === undefined) {
             directions.origin = {lat: lat, lng: lng};
+        } else {
+            directions.waypoints.push({location: {lat: lat, lng: lng}, stopover: false});
         }
+    }
+
+    if (directions.destination.lat === undefined) {
+        directions.destination = directions.waypoints.pop().location;
     }
 
     return directions;

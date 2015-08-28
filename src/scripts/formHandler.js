@@ -17,6 +17,7 @@ class FormHandler {
 
             FormHandler.fixLatLng(hill);
             callback(hill);
+            form.reset();
         });
     }
 
@@ -24,6 +25,7 @@ class FormHandler {
         let data = {hill: JSON.stringify(hill)};
         let hillLoader = new HillLoader();
         $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
+        hideForm();
     }
 
     static fixLatLng(hill) {

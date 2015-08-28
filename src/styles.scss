@@ -16,6 +16,36 @@ html, body {
     top: 50px;
     left: 50px;
     background: white;
+    padding: 0 30px;
+    box-sizing: border-box;
+
+    h1 {
+        display: inline-block;
+        font-size: 1.5em;
+        width: calc(100% - 34px);
+    }
+
+    h1 + span {
+        display: inline-block;
+        font-size: 30px;
+        width: 30px;
+        text-align: right;
+        cursor: pointer;
+    }
+
+    ul {
+        list-style: none;
+
+        li {
+            padding: 10px 0;
+            cursor: pointer;
+            border-bottom: 1px gray solid;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+    }
 }
 
 #newHillForm {
@@ -29,4 +59,12 @@ html, body {
 
     background: white;
     padding: 50px;
+
+    span {
+        position: absolute;
+        top: 5px;
+        right: 20px;
+        font-size: 30px;
+        cursor: pointer;
+    }
 }
