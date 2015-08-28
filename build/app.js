@@ -255,7 +255,7 @@ var OverlayHandler = (function () {
             var id = this.hills.length;
             this.hills.push({ hill: hill, fn: fn });
 
-            this.element.find('ul').append('<li onclick="overlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
+            this.element.find('ul').append('<li onclick="OverlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
         }
     }], [{
         key: 'selectHill',
