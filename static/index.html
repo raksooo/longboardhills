@@ -11,5 +11,17 @@
     </head>
     <body>
         <div id="map"></div>
+
+        <div id="newHillForm">
+            <form onsubmit="postform(event, this); return false;">
+                URL: <input type="url" name="url" /><br />
+                Name: <input type="text" name="name" /><br />
+                Busstop: <input type="text" name="busstop" /><br />
+                Difficulty: <input type="text" name="difficulty" /><br />
+                Traffic: <input type="text" name="traffic" /><br />
+                Extra: <input type="text" name="extra" /><br />
+                <input type="submit" value="Add hill!" />
+            </form>
+        </div>
     </body>
 </html>
