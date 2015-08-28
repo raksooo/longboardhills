@@ -1,4 +1,4 @@
-import './formHandler.js';
+import './formHandler';
 import {HillLoader} from './hillLoader';
 
 var map, hillLoader;
@@ -18,10 +18,7 @@ class Main {
     createMap() {
         let mapCanvas = $('#map')[0];
         let mapOptions = {
-            center: {
-                lat: 57.7,
-                lng: 11.98
-            },
+            center: {lat: 57.7, lng: 11.98},
             zoom: 13,
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             streetViewControl: true,

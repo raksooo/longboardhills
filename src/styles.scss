@@ -10,6 +10,14 @@ html, body {
     background-color: #CCC;
 }
 
+#overlay {
+    position: absolute;
+    width: 300px;
+    top: 50px;
+    left: 50px;
+    background: white;
+}
+
 #newHillForm {
     display: none;
 

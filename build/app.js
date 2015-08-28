@@ -71,7 +71,7 @@ window.postform = FormHandler.postform;
 window.showForm = FormHandler.showForm;
 window.hideForm = FormHandler.hideForm;
 
-},{"./hillLoader.js":2,"./routeParser.js":4}],2:[function(require,module,exports){
+},{"./hillLoader.js":2,"./routeParser.js":5}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -82,7 +82,9 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var map;
+var _overlayHandler = require('./overlayHandler');
+
+var map, overlayHandler;
 
 var HillLoader = (function () {
     function HillLoader(_map) {
@@ -92,6 +94,8 @@ var HillLoader = (function () {
             map = _map;
         }
         this.map = map;
+
+        overlayHandler = _overlayHandler.OverlayHandler.getOverlayHandler();
     }
 
     _createClass(HillLoader, [{
@@ -125,6 +129,8 @@ var HillLoader = (function () {
             var open = infoWindow.open.bind(infoWindow, map, marker);
             line.addListener('click', open);
             marker.addListener('click', open);
+
+            overlayHandler.addHill(hill, open);
         }
     }, {
         key: 'drawPoly',
@@ -146,14 +152,14 @@ var HillLoader = (function () {
 
 exports.HillLoader = HillLoader;
 
-},{}],3:[function(require,module,exports){
+},{"./overlayHandler":4}],3:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-require('./formHandler.js');
+require('./formHandler');
 
 var _hillLoader = require('./hillLoader');
 
@@ -178,10 +184,7 @@ var Main = (function () {
         value: function createMap() {
             var mapCanvas = $('#map')[0];
             var mapOptions = {
-                center: {
-                    lat: 57.7,
-                    lng: 11.98
-                },
+                center: { lat: 57.7, lng: 11.98 },
                 zoom: 13,
                 mapTypeId: google.maps.MapTypeId.TERRAIN,
                 streetViewControl: true,
@@ -204,7 +207,68 @@ var Main = (function () {
     return Main;
 })();
 
-},{"./formHandler.js":1,"./hillLoader":2}],4:[function(require,module,exports){
+},{"./formHandler":1,"./hillLoader":2}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var overlayHandlerInstance;
+
+var OverlayHandler = (function () {
+    function OverlayHandler() {
+        _classCallCheck(this, OverlayHandler);
+
+        this.hills = [];
+        this.element = $('#overlay');
+    }
+
+    _createClass(OverlayHandler, [{
+        key: 'addHill',
+        value: function addHill(hill, fn) {
+            var id = this.hills.length;
+            this.hills.push({ hill: hill, fn: fn });
+
+            this.element.append('<li onclick="overlayHandler.selectHill(' + id + ');">' + hill.name + '</li>');
+        }
+    }], [{
+        key: 'selectHill',
+        value: function selectHill(i) {
+            console.log(overlayHandlerInstance.hills[i].fn());
+        }
+    }, {
+        key: 'getOverlayHandler',
+        value: function getOverlayHandler() {
+            if (overlayHandlerInstance === undefined) {
+                overlayHandlerInstance = new OverlayHandler();
+            }
+            return overlayHandlerInstance;
+        }
+    }, {
+        key: 'showOverlay',
+        value: function showOverlay() {
+            this.element.show();
+        }
+    }, {
+        key: 'hideOverlay',
+        value: function hideOverlay() {
+            this.element.hide();
+        }
+    }]);
+
+    return OverlayHandler;
+})();
+
+exports.OverlayHandler = OverlayHandler;
+
+window.overlayHandler = OverlayHandler;
+
+},{}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

@@ -1,4 +1,6 @@
-var map;
+import {OverlayHandler} from './overlayHandler';
+
+var map, overlayHandler;
 
 export class HillLoader {
     constructor(_map) {
@@ -6,6 +8,8 @@ export class HillLoader {
             map = _map;
         }
         this.map = map;
+
+        overlayHandler = OverlayHandler.getOverlayHandler();
     }
 
     loadHills() {
@@ -40,6 +44,8 @@ export class HillLoader {
         let open = infoWindow.open.bind(infoWindow, map, marker);
         line.addListener('click', open);
         marker.addListener('click', open);
+
+        overlayHandler.addHill(hill, open);
     }
 
     drawPoly(points) {
