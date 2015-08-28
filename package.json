@@ -9,7 +9,7 @@
     "scripts": {
         "build": "browserify src/scripts/main.js -t babelify -o build/app.js",
         "watch-js": "watchify src/scripts/main.js -t babelify -o build/app.js",
-        "watch-css": "sass --watch src/styles/:build/styles/",
+        "watch-css": "sass --watch src/styles/main.scss:build/styles/main.css",
         "watch": "npm run watch-js & npm run watch-css & npm start",
         "start": "babel-node server.js"
     }

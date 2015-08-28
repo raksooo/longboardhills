@@ -1,13 +1,3 @@
-html, body {
-  padding: 0;
-  margin: 0;
-  height: 100%; }
-
-#map {
-  width: 100%;
-  height: 100%;
-  background-color: #CCC; }
-
 #overlay {
   position: absolute;
   width: 300px;
@@ -51,4 +41,14 @@ html, body {
     font-size: 30px;
     cursor: pointer; }
 
-/*# sourceMappingURL=styles.css.map */
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%; }
+
+#map {
+  width: 100%;
+  height: 100%;
+  background-color: #CCC; }
+
+/*# sourceMappingURL=main.css.map */
