@@ -45,7 +45,7 @@ var FormHandler = (function () {
             var data = { hill: JSON.stringify(hill) };
             var hillLoader = new _hillLoaderJs.HillLoader();
             $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
-            hideForm();
+            FormHandler.hideForm();
         }
     }, {
         key: 'fixLatLng',
@@ -69,9 +69,7 @@ var FormHandler = (function () {
     return FormHandler;
 })();
 
-window.postform = FormHandler.postform;
-window.showForm = FormHandler.showForm;
-window.hideForm = FormHandler.hideForm;
+window.FormHandler = FormHandler;
 
 },{"./hillLoader.js":2,"./routeParser.js":6}],2:[function(require,module,exports){
 'use strict';
@@ -88,18 +86,12 @@ var _overlayHandler = require('./overlayHandler');
 
 var _mapHandler = require('./mapHandler');
 
-var mapHandler, overlayHandler;
-
 var HillLoader = (function () {
     function HillLoader() {
         _classCallCheck(this, HillLoader);
 
-        if (mapHandler === undefined) {
-            mapHandler = _mapHandler.MapHandler.getMapHandler();
-        }
-        if (overlayHandler === undefined) {
-            overlayHandler = _overlayHandler.OverlayHandler.getOverlayHandler();
-        }
+        this.mapHandler = _mapHandler.MapHandler.getMapHandler();
+        this.overlayHandler = _overlayHandler.OverlayHandler.getOverlayHandler();
     }
 
     _createClass(HillLoader, [{
@@ -126,15 +118,15 @@ var HillLoader = (function () {
 
             var marker = new google.maps.Marker({
                 position: hill.path[0],
-                map: mapHandler.map,
+                map: this.mapHandler.map,
                 title: hill.name
             });
 
-            var open = infoWindow.open.bind(infoWindow, mapHandler.map, marker);
+            var open = infoWindow.open.bind(infoWindow, this.mapHandler.map, marker);
             line.addListener('click', open);
             marker.addListener('click', open);
 
-            overlayHandler.addHill(hill, open);
+            this.overlayHandler.addHill(hill, open);
         }
     }, {
         key: 'drawPoly',
@@ -144,7 +136,7 @@ var HillLoader = (function () {
                 strokeColor: "#FF00AA",
                 strokeOpacity: .7,
                 strokeWeight: 3,
-                map: mapHandler.map
+                map: this.mapHandler.map
             });
 
             return line;
@@ -247,7 +239,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _mapHandler = require('./mapHandler');
 
-var overlayHandlerInstance;
+var instance;
 
 var OverlayHandler = (function () {
     function OverlayHandler() {
@@ -268,16 +260,16 @@ var OverlayHandler = (function () {
     }], [{
         key: 'selectHill',
         value: function selectHill(i) {
-            overlayHandlerInstance.hills[i].fn();
-            _mapHandler.MapHandler.getMapHandler().map.setCenter(overlayHandlerInstance.hills[i].hill.path[0]);
+            instance.hills[i].fn();
+            _mapHandler.MapHandler.getMapHandler().map.setCenter(instance.hills[i].hill.path[0]);
         }
     }, {
         key: 'getOverlayHandler',
         value: function getOverlayHandler() {
-            if (overlayHandlerInstance === undefined) {
-                overlayHandlerInstance = new OverlayHandler();
+            if (instance === undefined) {
+                instance = new OverlayHandler();
             }
-            return overlayHandlerInstance;
+            return instance;
         }
     }, {
         key: 'showOverlay',

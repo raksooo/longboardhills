@@ -1,6 +1,6 @@
 import {MapHandler} from './mapHandler';
 
-var overlayHandlerInstance;
+var instance;
 
 export class OverlayHandler {
     constructor() {
@@ -16,15 +16,15 @@ export class OverlayHandler {
     }
 
     static selectHill(i) {
-        overlayHandlerInstance.hills[i].fn();
-        MapHandler.getMapHandler().map.setCenter(overlayHandlerInstance.hills[i].hill.path[0]);
+        instance.hills[i].fn();
+        MapHandler.getMapHandler().map.setCenter(instance.hills[i].hill.path[0]);
     }
 
     static getOverlayHandler() {
-        if (overlayHandlerInstance === undefined) {
-            overlayHandlerInstance = new OverlayHandler();
+        if (instance === undefined) {
+            instance = new OverlayHandler();
         }
-        return overlayHandlerInstance;
+        return instance;
     }
 
     static showOverlay() {

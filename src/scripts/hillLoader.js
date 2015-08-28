@@ -1,16 +1,10 @@
 import {OverlayHandler} from './overlayHandler';
 import {MapHandler} from './mapHandler';
 
-var mapHandler, overlayHandler;
-
 export class HillLoader {
     constructor() {
-        if (mapHandler === undefined) {
-            mapHandler = MapHandler.getMapHandler();
-        }
-        if (overlayHandler === undefined) {
-            overlayHandler = OverlayHandler.getOverlayHandler();
-        }
+        this.mapHandler = MapHandler.getMapHandler();
+        this.overlayHandler = OverlayHandler.getOverlayHandler();
     }
 
     loadHills() {
@@ -38,15 +32,15 @@ export class HillLoader {
 
         let marker = new google.maps.Marker({
             position: hill.path[0],
-            map: mapHandler.map,
+            map: this.mapHandler.map,
             title: hill.name
         });
 
-        let open = infoWindow.open.bind(infoWindow, mapHandler.map, marker);
+        let open = infoWindow.open.bind(infoWindow, this.mapHandler.map, marker);
         line.addListener('click', open);
         marker.addListener('click', open);
 
-        overlayHandler.addHill(hill, open);
+        this.overlayHandler.addHill(hill, open);
     }
 
     drawPoly(points) {
@@ -55,7 +49,7 @@ export class HillLoader {
             strokeColor: "#FF00AA",
             strokeOpacity: .7,
             strokeWeight: 3,
-            map: mapHandler.map
+            map: this.mapHandler.map
         });
 
         return line;

@@ -13,14 +13,14 @@
 
         <div id="overlay">
             <h1>Hills</h1>
-            <span id="openForm" onclick="showForm()">+</span>
+            <span id="openForm" onclick="FormHandler.showForm()">+</span>
             <ul>
             </ul>
         </div>
 
         <div id="newHillForm">
-            <span onclick="hideForm()">x</span>
-            <form onsubmit="postform(event, this); return false;">
+            <span onclick="FormHandler.hideForm()">x</span>
+            <form onsubmit="FormHandler.postform(event, this); return false;">
                 URL: <input type="url" name="url" /><br />
                 Name: <input type="text" name="name" /><br />
                 Busstop: <input type="text" name="busstop" /><br />

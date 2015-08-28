@@ -25,7 +25,7 @@ class FormHandler {
         let data = {hill: JSON.stringify(hill)};
         let hillLoader = new HillLoader();
         $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
-        hideForm();
+        FormHandler.hideForm();
     }
 
     static fixLatLng(hill) {
@@ -43,7 +43,5 @@ class FormHandler {
     }
 }
 
-window.postform = FormHandler.postform;
-window.showForm = FormHandler.showForm;
-window.hideForm = FormHandler.hideForm;
+window.FormHandler = FormHandler;
 
