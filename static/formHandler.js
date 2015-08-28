@@ -1,34 +1,37 @@
-function postform(event, form) {
-    event.preventDefault();
+import * as routeParser from "./routeParser.js";
+import {HillLoader} from "./hillLoader.js";
 
-    getInfo(form, function(hill) {
-        post(hill);
-    });
+class FormHandler {
+    static postform(event, form) {
+        event.preventDefault();
+        FormHandler.getInfo(form, FormHandler.post);
+    }
+
+    static getInfo(form, callback) {
+        routeParser.newRoute(form.url.value, hill => {
+            hill.name = form.name.value;
+            hill.busstop = form.busstop.value;
+            hill.difficulty = form.difficulty.value;
+            hill.traffic = form.traffic.value;
+            hill.extra = form.extra.value;
+
+            FormHandler.fixLatLng(hill);
+            callback(hill);
+        });
+    }
+
+    static post(hill) {
+        let data = {hill: JSON.stringify(hill)};
+        let hillLoader = new HillLoader();
+        $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
+    }
+
+    static fixLatLng(hill) {
+        hill.path = $.map(hill.path, point => {
+            return {lat: point.G, lng: point.K};
+        });
+    }
 }
 
-function getInfo(form, callback) {
-    newRoute(form.url.value, function(hill) {
-        hill.name = form.name.value;
-        hill.busstop = form.busstop.value;
-        hill.difficulty = form.difficulty.value;
-        hill.traffic = form.traffic.value;
-        hill.extra = form.extra.value;
-
-        fixLatLng(hill);
-        callback(hill);
-    });
-}
-
-function post(hill) {
-    var data = {hill: JSON.stringify(hill)};
-    $.post('/addHill', data, function() {
-        addHill(hill);
-    });
-}
-
-function fixLatLng(hill) {
-    hill.path = $.map(hill.path, function(point) {
-        return {lat: point.G, lng: point.K};
-    });
-}
+window.postform = FormHandler.postform;
 

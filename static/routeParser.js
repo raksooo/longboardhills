@@ -5,7 +5,7 @@ $(function (){
     elevator = new google.maps.ElevationService();
 });
 
-function newRoute(url, callback) {
+export function newRoute(url, callback) {
     var instructions = gMapsUrlPointParser(url);
     getPath(instructions, function(path) {
         calculateElevation(instructions, function(decline) {
@@ -52,18 +52,18 @@ function calculateElevation(directions, callback) {
 }
 
 function gMapsUrlPointParser(url, callback) {
-    var directions = {};
+    let directions = {};
     url = url.substring(url.indexOf("/maps/dir/") + "/maps/dir/".length);
-    urlComponents = url.split('/');
+    let urlComponents = url.split('/');
 
     directions.destination = {};
-    var dest = urlComponents[1].split(',');
+    let dest = urlComponents[1].split(',');
     directions.destination.lat = parseFloat(dest[0]);
     directions.destination.lng = parseFloat(dest[1]);
 
     directions.waypoints = [];
-    var data = urlComponents[3];
-    var index = 0;
+    let data = urlComponents[3];
+    let index = 0;
     while ((index = data.indexOf('!1d')) !== -1) {
         data = data.substring(index + '!1d'.length);
         var lng = data.substring(0, data.indexOf('!'));
