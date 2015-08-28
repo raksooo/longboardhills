@@ -9,8 +9,8 @@
         "express": "latest"
     },
     "scripts": {
-        "build": "browserify static/main.js -t babelify -o build/app.js",
-        "watch-js": "watchify static/main.js -t babelify -o build/app.js",
+        "build": "browserify src/scripts/main.js -t babelify -o build/app.js",
+        "watch-js": "watchify src/scripts/main.js -t babelify -o build/app.js",
         "watch": "npm run watch-js & npm start",
         "start": "babel-node server.js"
     }

@@ -1,5 +1,5 @@
 import './formHandler.js';
-import {HillLoader} from "./hillLoader";
+import {HillLoader} from './hillLoader';
 
 var map, hillLoader;
 

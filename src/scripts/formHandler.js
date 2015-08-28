@@ -1,5 +1,5 @@
-import * as routeParser from "./routeParser.js";
-import {HillLoader} from "./hillLoader.js";
+import * as routeParser from './routeParser.js';
+import {HillLoader} from './hillLoader.js';
 
 class FormHandler {
     static postform(event, form) {
@@ -31,7 +31,17 @@ class FormHandler {
             return {lat: point.G, lng: point.K};
         });
     }
+
+    static showForm() {
+        $('#newHillForm').show();
+    }
+
+    static hideForm() {
+        $('#newHillForm').hide();
+    }
 }
 
 window.postform = FormHandler.postform;
+window.showForm = FormHandler.showForm;
+window.hideForm = FormHandler.hideForm;
 

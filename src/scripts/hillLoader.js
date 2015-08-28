@@ -1,4 +1,3 @@
-
 var map;
 
 export class HillLoader {

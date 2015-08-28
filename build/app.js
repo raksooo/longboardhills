@@ -1,17 +1,17 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _routeParserJs = require("./routeParser.js");
+var _routeParserJs = require('./routeParser.js');
 
 var routeParser = _interopRequireWildcard(_routeParserJs);
 
-var _hillLoaderJs = require("./hillLoader.js");
+var _hillLoaderJs = require('./hillLoader.js');
 
 var FormHandler = (function () {
     function FormHandler() {
@@ -19,13 +19,13 @@ var FormHandler = (function () {
     }
 
     _createClass(FormHandler, null, [{
-        key: "postform",
+        key: 'postform',
         value: function postform(event, form) {
             event.preventDefault();
             FormHandler.getInfo(form, FormHandler.post);
         }
     }, {
-        key: "getInfo",
+        key: 'getInfo',
         value: function getInfo(form, callback) {
             routeParser.newRoute(form.url.value, function (hill) {
                 hill.name = form.name.value;
@@ -39,18 +39,28 @@ var FormHandler = (function () {
             });
         }
     }, {
-        key: "post",
+        key: 'post',
         value: function post(hill) {
             var data = { hill: JSON.stringify(hill) };
             var hillLoader = new _hillLoaderJs.HillLoader();
             $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
         }
     }, {
-        key: "fixLatLng",
+        key: 'fixLatLng',
         value: function fixLatLng(hill) {
             hill.path = $.map(hill.path, function (point) {
                 return { lat: point.G, lng: point.K };
             });
+        }
+    }, {
+        key: 'showForm',
+        value: function showForm() {
+            $('#newHillForm').show();
+        }
+    }, {
+        key: 'hideForm',
+        value: function hideForm() {
+            $('#newHillForm').hide();
         }
     }]);
 
@@ -58,6 +68,8 @@ var FormHandler = (function () {
 })();
 
 window.postform = FormHandler.postform;
+window.showForm = FormHandler.showForm;
+window.hideForm = FormHandler.hideForm;
 
 },{"./hillLoader.js":2,"./routeParser.js":4}],2:[function(require,module,exports){
 'use strict';
@@ -143,7 +155,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 require('./formHandler.js');
 
-var _hillLoader = require("./hillLoader");
+var _hillLoader = require('./hillLoader');
 
 var map, hillLoader;
 

@@ -8,15 +8,16 @@ var storage = require('node-persist'),
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(sassMiddleware({
-    src: path.join(__dirname, 'static'),
+    src: path.join(__dirname, 'src'),
     dest: path.join(__dirname, 'build', 'styles'),
+    force: true,
     debug: true,
     outputStyle: 'compressed',
     prefix: '/styles'
 }));
 // TODO: Flytta upp nedanstående så att inte scss:en kompileras varje sidhämtning
 app.use('/script', serveStatic(__dirname + "/build/"));
-app.use('/', serveStatic(__dirname + "/static/"));
+app.use('/', serveStatic(__dirname + "/src/"));
 
 storage.initSync({
     dir: 'data.js'
