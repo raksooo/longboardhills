@@ -1,5 +1,4 @@
 var storage = require('node-persist'),
-    path = require('path'),
     bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
     express = require('express'),
