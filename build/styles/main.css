@@ -11,7 +11,13 @@
     box-sizing: border-box;
     cursor: pointer;
     color: white;
-    font-family: Oxygen; }
+    font-family: Oxygen;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
   #overlay h1 {
     width: 70%;
     font-size: 1.5em;
@@ -28,7 +34,12 @@
     margin-top: 0px;
     padding-left: 0;
     overflow-y: auto;
-    max-height: 600px; }
+    max-height: 600px;
+    transition: 500ms linear;
+    transition-property: max-height, margin-bottom; }
+    #overlay ul.hidden {
+      max-height: 0;
+      margin-bottom: 0; }
     #overlay ul li {
       padding: 10px 30px;
       cursor: pointer;

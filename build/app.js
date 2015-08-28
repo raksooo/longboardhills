@@ -272,14 +272,23 @@ var OverlayHandler = (function () {
             return instance;
         }
     }, {
+        key: 'toggleOverlay',
+        value: function toggleOverlay() {
+            if ($('#overlay').find('ul').height()) {
+                OverlayHandler.hideOverlay();
+            } else {
+                OverlayHandler.showOverlay();
+            }
+        }
+    }, {
         key: 'showOverlay',
         value: function showOverlay() {
-            this.element.show();
+            $('#overlay').find('ul').removeClass('hidden');
         }
     }, {
         key: 'hideOverlay',
         value: function hideOverlay() {
-            this.element.hide();
+            $('#overlay').find('ul').addClass('hidden');
         }
     }]);
 
@@ -288,7 +297,7 @@ var OverlayHandler = (function () {
 
 exports.OverlayHandler = OverlayHandler;
 
-window.overlayHandler = OverlayHandler;
+window.OverlayHandler = OverlayHandler;
 
 },{"./mapHandler":4}],6:[function(require,module,exports){
 'use strict';

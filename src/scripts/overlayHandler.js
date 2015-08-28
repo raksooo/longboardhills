@@ -27,14 +27,22 @@ export class OverlayHandler {
         return instance;
     }
 
+    static toggleOverlay() {
+        if ($('#overlay').find('ul').height()) {
+            OverlayHandler.hideOverlay();
+        } else {
+            OverlayHandler.showOverlay();
+        }
+    }
+
     static showOverlay() {
-        this.element.show();
+        $('#overlay').find('ul').removeClass('hidden');
     }
 
     static hideOverlay() {
-        this.element.hide();
+        $('#overlay').find('ul').addClass('hidden');
     }
 }
 
-window.overlayHandler = OverlayHandler;
+window.OverlayHandler = OverlayHandler;
 
