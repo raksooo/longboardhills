@@ -73,7 +73,7 @@ window.postform = FormHandler.postform;
 window.showForm = FormHandler.showForm;
 window.hideForm = FormHandler.hideForm;
 
-},{"./hillLoader.js":2,"./routeParser.js":5}],2:[function(require,module,exports){
+},{"./hillLoader.js":2,"./routeParser.js":6}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -86,18 +86,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _overlayHandler = require('./overlayHandler');
 
-var map, overlayHandler;
+var _mapHandler = require('./mapHandler');
+
+var mapHandler, overlayHandler;
 
 var HillLoader = (function () {
-    function HillLoader(_map) {
+    function HillLoader() {
         _classCallCheck(this, HillLoader);
 
-        if (_map !== undefined) {
-            map = _map;
+        if (mapHandler === undefined) {
+            mapHandler = _mapHandler.MapHandler.getMapHandler();
         }
-        this.map = map;
-
-        overlayHandler = _overlayHandler.OverlayHandler.getOverlayHandler();
+        if (overlayHandler === undefined) {
+            overlayHandler = _overlayHandler.OverlayHandler.getOverlayHandler();
+        }
     }
 
     _createClass(HillLoader, [{
@@ -124,11 +126,11 @@ var HillLoader = (function () {
 
             var marker = new google.maps.Marker({
                 position: hill.path[0],
-                map: map,
+                map: mapHandler.map,
                 title: hill.name
             });
 
-            var open = infoWindow.open.bind(infoWindow, map, marker);
+            var open = infoWindow.open.bind(infoWindow, mapHandler.map, marker);
             line.addListener('click', open);
             marker.addListener('click', open);
 
@@ -142,7 +144,7 @@ var HillLoader = (function () {
                 strokeColor: "#FF00AA",
                 strokeOpacity: .7,
                 strokeWeight: 3,
-                map: this.map
+                map: mapHandler.map
             });
 
             return line;
@@ -154,10 +156,8 @@ var HillLoader = (function () {
 
 exports.HillLoader = HillLoader;
 
-},{"./overlayHandler":4}],3:[function(require,module,exports){
+},{"./mapHandler":4,"./overlayHandler":5}],3:[function(require,module,exports){
 'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -165,51 +165,76 @@ require('./formHandler');
 
 var _hillLoader = require('./hillLoader');
 
-var map, hillLoader;
+var _mapHandler = require('./mapHandler');
+
+var hillLoader;
 
 $(function () {
     new Main();
 });
 
-var Main = (function () {
-    function Main() {
-        _classCallCheck(this, Main);
+var Main = function Main() {
+    _classCallCheck(this, Main);
 
-        this.createMap();
+    _mapHandler.MapHandler.getMapHandler();
+    hillLoader = new _hillLoader.HillLoader();
+    hillLoader.loadHills();
+};
 
-        hillLoader = new _hillLoader.HillLoader(map);
-        hillLoader.loadHills();
+},{"./formHandler":1,"./hillLoader":2,"./mapHandler":4}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var instance;
+
+var MapHandler = (function () {
+    function MapHandler() {
+        _classCallCheck(this, MapHandler);
+
+        var mapCanvas = $('#map')[0];
+        var mapOptions = {
+            center: { lat: 57.7, lng: 11.98 },
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.TERRAIN,
+            streetViewControl: true,
+            panControl: false,
+            panControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.TERRAIN],
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            }
+        };
+        this.map = new google.maps.Map(mapCanvas, mapOptions);
     }
 
-    _createClass(Main, [{
-        key: 'createMap',
-        value: function createMap() {
-            var mapCanvas = $('#map')[0];
-            var mapOptions = {
-                center: { lat: 57.7, lng: 11.98 },
-                zoom: 13,
-                mapTypeId: google.maps.MapTypeId.TERRAIN,
-                streetViewControl: true,
-                panControl: false,
-                panControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT_TOP
-                },
-                zoomControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT_TOP
-                },
-                mapTypeControlOptions: {
-                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.TERRAIN],
-                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-                }
-            };
-            map = new google.maps.Map(mapCanvas, mapOptions);
+    _createClass(MapHandler, null, [{
+        key: 'getMapHandler',
+        value: function getMapHandler() {
+            if (instance === undefined) {
+                instance = new MapHandler();
+            }
+            return instance;
         }
     }]);
 
-    return Main;
+    return MapHandler;
 })();
 
-},{"./formHandler":1,"./hillLoader":2}],4:[function(require,module,exports){
+exports.MapHandler = MapHandler;
+
+},{}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -270,7 +295,7 @@ exports.OverlayHandler = OverlayHandler;
 
 window.overlayHandler = OverlayHandler;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
