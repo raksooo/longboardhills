@@ -167,9 +167,10 @@ var Main = (function () {
     function Main() {
         _classCallCheck(this, Main);
 
+        this.createMap();
+
         hillLoader = new _hillLoader.HillLoader(map);
         hillLoader.loadHills();
-        this.createMap();
     }
 
     _createClass(Main, [{

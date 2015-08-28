@@ -3,15 +3,16 @@ import {HillLoader} from './hillLoader';
 
 var map, hillLoader;
 
-$(function() {
+$(() => {
     new Main();
 });
 
 class Main {
     constructor() {
+        this.createMap();
+
         hillLoader = new HillLoader(map);
         hillLoader.loadHills();
-        this.createMap();
     }
 
     createMap() {
