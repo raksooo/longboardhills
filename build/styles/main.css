@@ -1,29 +1,46 @@
 #overlay {
   position: absolute;
   width: 300px;
-  top: 50px;
-  left: 50px;
-  background: white;
-  padding: 0 30px;
+  top: 30px;
+  left: 30px;
+  background: #009688;
+  padding: 0 5px;
   box-sizing: border-box; }
+  #overlay h1, #overlay h1 + span {
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: white;
+    font-family: Oxygen; }
   #overlay h1 {
-    display: inline-block;
+    width: 70%;
     font-size: 1.5em;
-    width: calc(100% - 34px); }
+    margin: 10px 0;
+    padding-left: 20px; }
   #overlay h1 + span {
-    display: inline-block;
+    width: calc(30% - 6px);
     font-size: 30px;
-    width: 30px;
     text-align: right;
-    cursor: pointer; }
+    padding-right: 15px; }
   #overlay ul {
-    list-style: none; }
+    background: white;
+    list-style: none;
+    margin-top: 0px;
+    padding-left: 0;
+    overflow-y: auto;
+    max-height: 600px; }
     #overlay ul li {
-      padding: 10px 0;
+      padding: 10px 30px;
       cursor: pointer;
-      border-bottom: 1px gray solid; }
-      #overlay ul li:last-child {
-        border-bottom: 0; }
+      font-family: Roboto;
+      font-weight: 300;
+      font-size: 1.1em; }
+      #overlay ul li:nth-child(2n) {
+        background: #4DB6AC; }
+      #overlay ul li:nth-child(2n+1) {
+        background: #80CBC4; }
+      #overlay ul li:first-child {
+        padding-top: 12px; }
 
 #newHillForm {
   display: none;

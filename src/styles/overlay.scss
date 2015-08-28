@@ -1,36 +1,59 @@
 #overlay {
     position: absolute;
     width: 300px;
-    top: 50px;
-    left: 50px;
-    background: white;
-    padding: 0 30px;
+    top: 30px;
+    left: 30px;
+    background: #009688;
+    padding: 0 5px;
     box-sizing: border-box;
 
-    h1 {
+    h1, h1 + span {
         display: inline-block;
+        box-sizing: border-box;
+        cursor: pointer;
+        color: white;
+        font-family: Oxygen;
+    }
+
+    h1 {
+        width: 70%;
         font-size: 1.5em;
-        width: calc(100% - 34px);
+        margin: 10px 0;
+        padding-left: 20px;
     }
 
     h1 + span {
-        display: inline-block;
+        width: calc(30% - 6px);
         font-size: 30px;
-        width: 30px;
         text-align: right;
-        cursor: pointer;
+        padding-right: 15px;
     }
 
     ul {
+        background: white;
         list-style: none;
+        margin-top: 0px;
+        padding-left: 0;
+        overflow-y: auto;
+        max-height: 600px;
 
         li {
-            padding: 10px 0;
+            padding: 10px 30px;
             cursor: pointer;
-            border-bottom: 1px gray solid;
+            font-family: Roboto;
+            font-weight: 300;
+            font-size: 1.1em;
 
-            &:last-child {
-                border-bottom: 0;
+            &:nth-child(2n) {
+                background: #4DB6AC;
+            }
+
+            &:nth-child(2n+1) {
+                background: #80CBC4;
+            }
+
+            &:first-child {
+                padding-top: 12px;
             }
         }
     }
