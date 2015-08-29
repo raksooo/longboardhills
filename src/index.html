@@ -3,8 +3,8 @@
     <head>
         <title>Longboard hills</title>
         <meta charset="utf-8">
-        <link href="build/styles/main.css" rel="stylesheet" />
         <link href='http://fonts.googleapis.com/css?family=Oxygen:300|Roboto:300' rel='stylesheet' type='text/css'>
+        <link href="build/styles/main.css" rel="stylesheet" />
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js"></script>
         <script src="build/app.js"></script>
@@ -19,15 +19,25 @@
             </ul>
         </div>
 
+        <div id="newHillUrl">
+            <form onsubmit="FormHandler.urlEntered(event, this); return false;">
+                <input type="url" name="url" placeholder="Google maps URL" />
+                <input type="submit" value="↵" />
+                <button type="button" onclick="FormHandler.hideForm();">×</button>
+            </form>
+        </div>
         <div id="newHillForm">
-            <span onclick="FormHandler.hideForm()">x</span>
+            <div class ="heading">
+                <h1>New hill</h1>
+                <span onclick="FormHandler.hideForm()">×</span>
+            </div>
+            <div id="previewMap"></div>
             <form onsubmit="FormHandler.postform(event, this); return false;">
-                URL: <input type="url" name="url" /><br />
-                Name: <input type="text" name="name" /><br />
-                Busstop: <input type="text" name="busstop" /><br />
-                Difficulty: <input type="text" name="difficulty" /><br />
-                Traffic: <input type="text" name="traffic" /><br />
-                Extra: <input type="text" name="extra" /><br />
+                <input type="text" name="name" placeholder="Name" />
+                <input type="text" name="busstop" placeholder="Busstop" />
+                <input type="text" name="difficulty" placeholder="Difficulty" />
+                <input type="text" name="traffic" placeholder="Traffic" />
+                <input type="text" name="extra" placeholder="Extra information" />
                 <input type="submit" value="Add hill!" />
             </form>
         </div>

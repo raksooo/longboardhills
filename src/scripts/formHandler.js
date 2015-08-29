@@ -1,6 +1,8 @@
 import * as routeParser from './routeParser.js';
 import {HillLoader} from './hillLoader.js';
 
+var newHill;
+
 class FormHandler {
     static postform(event, form) {
         event.preventDefault();
@@ -8,17 +10,9 @@ class FormHandler {
     }
 
     static getInfo(form, callback) {
-        routeParser.newRoute(form.url.value, hill => {
-            hill.name = form.name.value;
-            hill.busstop = form.busstop.value;
-            hill.difficulty = form.difficulty.value;
-            hill.traffic = form.traffic.value;
-            hill.extra = form.extra.value;
-
-            FormHandler.fixLatLng(hill);
-            callback(hill);
-            form.reset();
-        });
+        newHill.addData(form.name.value, form.busstop.value,
+                form.difficulty.value, form.traffic.value, form.extra.value);
+        callback(newHill.hill)
     }
 
     static post(hill) {
@@ -28,18 +22,85 @@ class FormHandler {
         FormHandler.hideForm();
     }
 
-    static fixLatLng(hill) {
-        hill.path = $.map(hill.path, point => {
-            return {lat: point.G, lng: point.K};
+    static urlEntered(event, form) {
+        event.preventDefault();
+
+        newHill = new HillCreator();
+        newHill.retrievePath(form.url.value, path => {
+            $('#newHillUrl').hide();
+            form.reset();
+
+            FormHandler.loadPreviewMap(path);
+            $('#newHillForm').show();
+            $('#newHillForm input[name="name"]').focus();
         });
     }
 
-    static showForm() {
-        $('#newHillForm').show();
+    static loadPreviewMap(path) {
+        let mapCanvas = $('#previewMap')[0];
+        let map = new google.maps.Map(mapCanvas, {
+            center: path[0],
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.TERRAIN,
+            streetViewControl: false,
+            panControl: false,
+            zoomControl: false,
+            mapTypeControl: false
+        });
+        new google.maps.Polyline({
+            path: path,
+            strokeColor: '#FF00AA',
+            strokeOpacity: .7,
+            strokeWeight: 3,
+            map: map
+        });
+        let bounds = new google.maps.LatLngBounds();
+        $.each(path, (i, latlng) => {
+            latlng = new google.maps.LatLng(latlng.lat, latlng.lng);
+            bounds.extend(latlng);
+        });
+        setTimeout(() => {
+            google.maps.event.trigger(map, 'resize');
+            map.fitBounds(bounds);
+        }, 0);
+    }
+
+    static showForm(path) {
+        $('#newHillUrl').show();
+        $('#newHillUrl input[type="url"]').focus();
     }
 
     static hideForm() {
+        $('#newHillUrl').hide();
         $('#newHillForm').hide();
+        $('#newHillUrl').find('form').first()[0].reset();
+        $('#newHillForm').find('form').first()[0].reset();
+    }
+}
+
+class HillCreator {
+    constructor() {}
+
+    retrievePath(url, callback) {
+        routeParser.newRoute(url, hill => {
+            this.hill = hill;
+            this.fixLatLng();
+            callback(hill.path);
+        });
+    }
+
+    addData(name, busstop, difficulty, traffic, extra) {
+        this.hill.name = name;
+        this.hill.busstop = busstop;
+        this.hill.difficulty = difficulty;
+        this.hill.traffic = traffic;
+        this.hill.extra = extra;
+    }
+
+    fixLatLng() {
+        this.hill.path = $.map(this.hill.path, point => {
+            return {lat: point.G, lng: point.K};
+        });
     }
 }
 

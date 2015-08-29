@@ -9,9 +9,6 @@ export class MapHandler {
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             streetViewControl: true,
             panControl: false,
-            panControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
             zoomControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_TOP
             },

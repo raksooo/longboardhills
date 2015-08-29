@@ -13,6 +13,8 @@ var routeParser = _interopRequireWildcard(_routeParserJs);
 
 var _hillLoaderJs = require('./hillLoader.js');
 
+var newHill;
+
 var FormHandler = (function () {
     function FormHandler() {
         _classCallCheck(this, FormHandler);
@@ -27,17 +29,8 @@ var FormHandler = (function () {
     }, {
         key: 'getInfo',
         value: function getInfo(form, callback) {
-            routeParser.newRoute(form.url.value, function (hill) {
-                hill.name = form.name.value;
-                hill.busstop = form.busstop.value;
-                hill.difficulty = form.difficulty.value;
-                hill.traffic = form.traffic.value;
-                hill.extra = form.extra.value;
-
-                FormHandler.fixLatLng(hill);
-                callback(hill);
-                form.reset();
-            });
+            newHill.addData(form.name.value, form.busstop.value, form.difficulty.value, form.traffic.value, form.extra.value);
+            callback(newHill.hill);
         }
     }, {
         key: 'post',
@@ -48,25 +41,104 @@ var FormHandler = (function () {
             FormHandler.hideForm();
         }
     }, {
-        key: 'fixLatLng',
-        value: function fixLatLng(hill) {
-            hill.path = $.map(hill.path, function (point) {
-                return { lat: point.G, lng: point.K };
+        key: 'urlEntered',
+        value: function urlEntered(event, form) {
+            event.preventDefault();
+
+            newHill = new HillCreator();
+            newHill.retrievePath(form.url.value, function (path) {
+                $('#newHillUrl').hide();
+                form.reset();
+
+                FormHandler.loadPreviewMap(path);
+                $('#newHillForm').show();
+                $('#newHillForm input[name="name"]').focus();
             });
         }
     }, {
+        key: 'loadPreviewMap',
+        value: function loadPreviewMap(path) {
+            var mapCanvas = $('#previewMap')[0];
+            var map = new google.maps.Map(mapCanvas, {
+                center: path[0],
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.TERRAIN,
+                streetViewControl: false,
+                panControl: false,
+                zoomControl: false,
+                mapTypeControl: false
+            });
+            new google.maps.Polyline({
+                path: path,
+                strokeColor: '#FF00AA',
+                strokeOpacity: .7,
+                strokeWeight: 3,
+                map: map
+            });
+            var bounds = new google.maps.LatLngBounds();
+            $.each(path, function (i, latlng) {
+                latlng = new google.maps.LatLng(latlng.lat, latlng.lng);
+                bounds.extend(latlng);
+            });
+            setTimeout(function () {
+                google.maps.event.trigger(map, 'resize');
+                map.fitBounds(bounds);
+            }, 0);
+        }
+    }, {
         key: 'showForm',
-        value: function showForm() {
-            $('#newHillForm').show();
+        value: function showForm(path) {
+            $('#newHillUrl').show();
+            $('#newHillUrl input[type="url"]').focus();
         }
     }, {
         key: 'hideForm',
         value: function hideForm() {
+            $('#newHillUrl').hide();
             $('#newHillForm').hide();
+            $('#newHillUrl').find('form').first()[0].reset();
+            $('#newHillForm').find('form').first()[0].reset();
         }
     }]);
 
     return FormHandler;
+})();
+
+var HillCreator = (function () {
+    function HillCreator() {
+        _classCallCheck(this, HillCreator);
+    }
+
+    _createClass(HillCreator, [{
+        key: 'retrievePath',
+        value: function retrievePath(url, callback) {
+            var _this = this;
+
+            routeParser.newRoute(url, function (hill) {
+                _this.hill = hill;
+                _this.fixLatLng();
+                callback(hill.path);
+            });
+        }
+    }, {
+        key: 'addData',
+        value: function addData(name, busstop, difficulty, traffic, extra) {
+            this.hill.name = name;
+            this.hill.busstop = busstop;
+            this.hill.difficulty = difficulty;
+            this.hill.traffic = traffic;
+            this.hill.extra = extra;
+        }
+    }, {
+        key: 'fixLatLng',
+        value: function fixLatLng() {
+            this.hill.path = $.map(this.hill.path, function (point) {
+                return { lat: point.G, lng: point.K };
+            });
+        }
+    }]);
+
+    return HillCreator;
 })();
 
 window.FormHandler = FormHandler;
@@ -203,9 +275,6 @@ var MapHandler = (function () {
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             streetViewControl: true,
             panControl: false,
-            panControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
             zoomControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_TOP
             },
