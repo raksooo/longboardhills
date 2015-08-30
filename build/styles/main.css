@@ -157,8 +157,8 @@
   display: inline-block;
   width: 50%; }
 #newHillForm form div {
-  line-height: 38px;
-  padding-top: 2px;
+  line-height: 37px;
+  padding-top: 3px;
   float: left;
   width: 35%; }
 #newHillForm form input[type='number'] {
