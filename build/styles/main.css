@@ -3,8 +3,8 @@
   width: 300px;
   top: 30px;
   left: 30px;
-  background: #009688;
-  padding: 0 5px;
+  background: #006064;
+  padding: 0 0;
   box-sizing: border-box;
   box-shadow: 0px 0px 20px #666666; }
   #overlay h1, #overlay h1 + span {
@@ -31,7 +31,6 @@
     text-align: right;
     padding-right: 15px; }
   #overlay ul {
-    background: white;
     list-style: none;
     margin-top: 0px;
     padding-left: 0;
@@ -51,9 +50,9 @@
       font-size: 1.1em;
       color: #333333; }
       #overlay ul li:nth-child(2n) {
-        background: #4DB6AC; }
+        background: rgba(144, 164, 174, 0.7); }
       #overlay ul li:nth-child(2n+1) {
-        background: #80CBC4; }
+        background: rgba(120, 144, 156, 0.7); }
       #overlay ul li:first-child {
         padding-top: 12px; }
       #overlay ul li div {
