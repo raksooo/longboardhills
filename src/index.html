@@ -39,8 +39,8 @@
             <form onsubmit="FormHandler.postform(event, this); return false;">
                 <input type="text" name="name" placeholder="Name" />
                 <input type="text" name="busstop" placeholder="Busstop" />
-                <input type="text" name="difficulty" placeholder="Difficulty" />
-                <input type="text" name="traffic" placeholder="Traffic" />
+                <div>Difficulty</div><input type="number" min="1" max="10" step="1" name="difficulty" placeholder="5/10" />
+                <div>Traffic</div><input type="number" min="1" max="10" step="1" name="traffic" placeholder="4/10" />
                 <input type="text" name="extra" placeholder="Extra information" />
                 <input type="submit" value="Add hill!" />
             </form>

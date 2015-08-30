@@ -136,13 +136,13 @@
   font-size: 30px;
   cursor: pointer;
   color: white; }
-#newHillForm form input[type='text'], #newHillForm form input[type='submit'] {
+#newHillForm form input, #newHillForm form div {
   display: block;
   width: 100%;
   height: 40px;
   border: none;
   font-size: 1.2em; }
-#newHillForm form input[type='text'] {
+#newHillForm form input:not([type='submit']), #newHillForm form div {
   padding-left: 10px;
   padding-right: 10px;
   background: rgba(255, 255, 255, 0.3);
@@ -153,6 +153,16 @@
   background: #9CCC65;
   font-family: Oxygen;
   margin-top: 10px; }
+#newHillForm form div, #newHillForm form input[type='number'] {
+  display: inline-block;
+  width: 50%; }
+#newHillForm form div {
+  line-height: 38px;
+  padding-top: 2px;
+  float: left;
+  width: 35%; }
+#newHillForm form input[type='number'] {
+  width: 65%; }
 #newHillForm #previewMap {
   width: 100%;
   height: 150px; }

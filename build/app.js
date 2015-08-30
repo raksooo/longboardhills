@@ -131,8 +131,8 @@ var HillCreator = (function () {
         value: function addData(name, busstop, difficulty, traffic, extra) {
             this.hill.name = name;
             this.hill.busstop = busstop;
-            this.hill.difficulty = difficulty;
-            this.hill.traffic = traffic;
+            this.hill.difficulty = Math.round(difficulty);
+            this.hill.traffic = Math.round(traffic);
             this.hill.extra = extra;
         }
     }, {
