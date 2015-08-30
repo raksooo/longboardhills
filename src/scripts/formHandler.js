@@ -26,14 +26,19 @@ class FormHandler {
         event.preventDefault();
 
         newHill = new HillCreator();
-        newHill.retrievePath(form.url.value, path => {
-            $('#newHillUrl').hide();
-            form.reset();
+        try {
+            newHill.retrievePath(form.url.value, path => {
+                $('#newHillUrl').hide();
+                $('#newHillUrl').removeClass('error');
+                form.reset();
 
-            FormHandler.loadPreviewMap(path);
-            $('#newHillForm').show();
-            $('#newHillForm input[name="name"]').focus();
-        });
+                FormHandler.loadPreviewMap(path);
+                $('#newHillForm').show();
+                $('#newHillForm input[name="name"]').focus();
+            });
+        } catch (err) {
+            $('#newHillUrl').addClass('error');
+        }
     }
 
     static loadPreviewMap(path) {
@@ -72,6 +77,7 @@ class FormHandler {
 
     static hideForm() {
         $('#newHillUrl').hide();
+        $('#newHillUrl').removeClass('error');
         $('#newHillForm').hide();
         $('#newHillUrl').find('form').first()[0].reset();
         $('#newHillForm').find('form').first()[0].reset();

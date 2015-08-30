@@ -46,14 +46,19 @@ var FormHandler = (function () {
             event.preventDefault();
 
             newHill = new HillCreator();
-            newHill.retrievePath(form.url.value, function (path) {
-                $('#newHillUrl').hide();
-                form.reset();
+            try {
+                newHill.retrievePath(form.url.value, function (path) {
+                    $('#newHillUrl').hide();
+                    $('#newHillUrl').removeClass('error');
+                    form.reset();
 
-                FormHandler.loadPreviewMap(path);
-                $('#newHillForm').show();
-                $('#newHillForm input[name="name"]').focus();
-            });
+                    FormHandler.loadPreviewMap(path);
+                    $('#newHillForm').show();
+                    $('#newHillForm input[name="name"]').focus();
+                });
+            } catch (err) {
+                $('#newHillUrl').addClass('error');
+            }
         }
     }, {
         key: 'loadPreviewMap',
@@ -95,6 +100,7 @@ var FormHandler = (function () {
         key: 'hideForm',
         value: function hideForm() {
             $('#newHillUrl').hide();
+            $('#newHillUrl').removeClass('error');
             $('#newHillForm').hide();
             $('#newHillUrl').find('form').first()[0].reset();
             $('#newHillForm').find('form').first()[0].reset();
@@ -459,7 +465,7 @@ function gMapsUrlPointParser(url, callback) {
     }
 
     var data = urlComponents[3];
-    while (data.indexOf('!1d') !== -1) {
+    while (data && data.indexOf('!1d') !== -1) {
         data = data.substring(data.indexOf('!1d') + '!1d'.length);
         var lng = data.substring(0, data.indexOf('!'));
         lng = parseFloat(lng);
@@ -474,8 +480,12 @@ function gMapsUrlPointParser(url, callback) {
         }
     }
 
-    if (directions.destination.lat === undefined) {
+    if (directions.destination.lat === undefined && directions.waypoints.length > 0) {
         directions.destination = directions.waypoints.pop().location;
+    }
+
+    if (!directions.origin.lat || !directions.destination.lat) {
+        throw new URLMismatchError();
     }
 
     return directions;

@@ -76,7 +76,7 @@ function gMapsUrlPointParser(url, callback) {
     }
 
     let data = urlComponents[3];
-    while (data.indexOf('!1d') !== -1) {
+    while (data && data.indexOf('!1d') !== -1) {
         data = data.substring(data.indexOf('!1d') + '!1d'.length);
         var lng = data.substring(0, data.indexOf('!'));
         lng = parseFloat(lng);
@@ -91,8 +91,12 @@ function gMapsUrlPointParser(url, callback) {
         }
     }
 
-    if (directions.destination.lat === undefined) {
+    if (directions.destination.lat === undefined && directions.waypoints.length > 0) {
         directions.destination = directions.waypoints.pop().location;
+    }
+
+    if (!directions.origin.lat || !directions.destination.lat) {
+        throw new URLMismatchError();
     }
 
     return directions;

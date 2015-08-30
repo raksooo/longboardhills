@@ -38,8 +38,7 @@
         padding-left: 0;
         overflow-y: auto;
         max-height: 600px;
-        transition: 500ms linear;
-        transition-property: max-height, margin-bottom;
+        transition: max-height 300ms linear, margin-bottom 100ms linear;
 
         &.hidden {
             max-height: 0;

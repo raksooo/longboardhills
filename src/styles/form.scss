@@ -21,11 +21,12 @@
     display: none;
 
     $button-width: 45px;
+    $input-height: 40px;
 
     input[type='url'] {
         margin: 0;
         width: 100%;
-        height: 40px;
+        height: $input-height;
         background: transparent;
         border: none;
         padding-left: 10px;
@@ -41,7 +42,7 @@
         top: 0;
         right: 0;
         border: 0;
-        height: 100%;
+        height: $input-height;
         width: $button-width;
         font-size: 1.2em;
         color: #333333;
@@ -57,6 +58,26 @@
         background: #E57373;
         font-size: 1.3em;
         padding-top: 0;
+    }
+
+    div {
+        line-height: 0px;
+        text-align: center;
+        font-style: italic;
+        font-size: 0.9em;
+        overflow: hidden;
+        transition: line-height 40ms linear;
+    }
+
+    &.error {
+        input[type='url'] {
+            background: #EF9A9A;
+        }
+
+        div {
+            padding-top: 2px;
+            line-height: $input-height - 5px;
+        }
     }
 }
 
