@@ -142,7 +142,8 @@
     height: 40px;
     width: 45px;
     font-size: 1.2em;
-    color: #333333; }
+    color: #333333;
+    cursor: pointer; }
   #newHillUrl input[type='submit'] {
     right: 45px;
     background: #81C784;
