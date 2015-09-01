@@ -369,6 +369,19 @@ var OverlayHandler = (function () {
         key: 'hideOverlay',
         value: function hideOverlay() {
             $('#overlay').find('ul').addClass('hidden');
+            $('#overlay').find('input#search').addClass('hidden');
+        }
+    }, {
+        key: 'toggleSearch',
+        value: function toggleSearch() {
+            var search = $('#overlay #search');
+            if (search.hasClass('hidden')) {
+                search.removeClass('hidden');
+                search.focus();
+            } else {
+                search.addClass('hidden');
+                OverlayHandler.emptySearch();
+            }
         }
     }, {
         key: 'search',
@@ -380,6 +393,16 @@ var OverlayHandler = (function () {
                     $(li).show();
                 }
             });
+        }
+    }, {
+        key: 'emptySearch',
+        value: function emptySearch(focus) {
+            var search = $('#search');
+            search.val('');
+            search.trigger('onkeyup');
+            if (focus) {
+                search.focus();
+            }
         }
     }]);
 

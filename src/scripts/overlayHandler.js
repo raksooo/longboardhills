@@ -41,6 +41,18 @@ export class OverlayHandler {
 
     static hideOverlay() {
         $('#overlay').find('ul').addClass('hidden');
+        $('#overlay').find('input#search').addClass('hidden');
+    }
+
+    static toggleSearch() {
+        let search = $('#overlay #search');
+        if (search.hasClass('hidden')) {
+            search.removeClass('hidden');
+            search.focus();
+        } else {
+            search.addClass('hidden');
+            OverlayHandler.emptySearch();
+        }
     }
 
     static search(term) {
@@ -51,6 +63,15 @@ export class OverlayHandler {
                 $(li).show();
             }
         });
+    }
+
+    static emptySearch(focus) {
+        let search = $('#search');
+        search.val('');
+        search.trigger('onkeyup');
+        if (focus) {
+            search.focus();
+        }
     }
 }
 

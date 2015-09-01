@@ -7,18 +7,7 @@
   padding: 0 0;
   box-sizing: border-box;
   box-shadow: 0px 0px 20px #666666; }
-  #overlay input#search {
-    display: block;
-    width: 100%;
-    height: 40px;
-    border: none;
-    font-size: 1.2em;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #444444;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.7); }
-  #overlay h1, #overlay h1 + span {
+  #overlay h1, #overlay .titleControl {
     display: inline-block;
     box-sizing: border-box;
     cursor: pointer;
@@ -36,11 +25,48 @@
     font-size: 1.5em;
     margin: 0;
     padding-left: 20px; }
-  #overlay h1 + span {
-    width: calc(30% - 6px);
+  #overlay .titleControl {
+    line-height: 47px;
+    float: right;
     font-size: 30px;
     text-align: right;
-    padding-right: 15px; }
+    padding-right: 15px;
+    padding-left: 3px; }
+  #overlay .titleControl#openSearch {
+    font-size: 24px;
+    padding-top: 5px;
+    transform: rotateZ(45deg); }
+  #overlay #searchDiv {
+    position: relative; }
+    #overlay #searchDiv input {
+      display: block;
+      width: 100%;
+      height: 40px;
+      border: none;
+      font-size: 1.2em;
+      padding-left: 10px;
+      padding-right: 10px;
+      color: #444444;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.7);
+      transition: height 40ms linear; }
+      #overlay #searchDiv input.hidden {
+        height: 0px;
+        padding: 0; }
+      #overlay #searchDiv input + div {
+        position: absolute;
+        right: 10px;
+        top: 14px;
+        font-family: Oxygen;
+        width: 17px;
+        height: 17px;
+        line-height: 17px;
+        background: grey;
+        color: white;
+        padding: 0;
+        text-align: center;
+        border-radius: 50%;
+        cursor: pointer; }
   #overlay ul {
     list-style: none;
     margin-top: 0px;

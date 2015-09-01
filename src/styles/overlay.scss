@@ -8,12 +8,7 @@
     box-sizing: border-box;
     box-shadow: 0px 0px 20px #666666;
 
-    input#search {
-        @include textinput();
-        background: rgba(255, 255, 255, 0.7);
-    }
-
-    h1, h1 + span {
+    h1, .titleControl {
         display: inline-block;
         box-sizing: border-box;
         cursor: pointer;
@@ -30,11 +25,50 @@
         padding-left: 20px;
     }
 
-    h1 + span {
-        width: calc(30% - 6px);
+    .titleControl {
+        line-height: 47px;
+        float: right;
         font-size: 30px;
         text-align: right;
         padding-right: 15px;
+        padding-left: 3px;
+    }
+
+    .titleControl#openSearch {
+        font-size: 24px;
+        padding-top: 5px;
+        transform: rotateZ(45deg);
+    }
+
+    #searchDiv {
+        position: relative;
+
+        input {
+            @include textinput();
+            background: rgba(255, 255, 255, 0.7);
+            transition: height 40ms linear;
+
+            &.hidden {
+                height: 0px;
+                padding: 0;
+            }
+
+            + div {
+                position: absolute;
+                right: 10px;
+                top: 14px;
+                font-family: Oxygen;
+                width: 17px;
+                height: 17px;
+                line-height: 17px;
+                background: grey;
+                color: white;
+                padding: 0;
+                text-align: center;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
     }
 
     ul {
