@@ -15,6 +15,7 @@
         <div id="overlay">
             <h1 onclick="OverlayHandler.toggleOverlay();">Hills</h1>
             <span id="openForm" onclick="FormHandler.showForm();">+</span>
+            <input type="text" id="search" placeholder="Search..." onkeyup="OverlayHandler.search(this.value);" />
             <ul>
             </ul>
         </div>

@@ -11,7 +11,8 @@ window.difficultyColors = [
     "#D84315",
     "#C62828",
     "#283593",
-    "#111111"
+    "#111111",
+    "#000000"
 ];
 
 export class HillLoader {
@@ -29,9 +30,8 @@ export class HillLoader {
     }
 
     loadHill(hill) {
-        // TODO: Ta bort senare när formuläret är fixat.
-        if (hill.difficulty === "") {
-            hill.difficulty = 1;
+        if (hill.difficulty === 0) {
+            hill.difficulty = 11;
         }
         let line = this.drawPoly(hill.path, hill.difficulty);
 

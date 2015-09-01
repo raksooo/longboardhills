@@ -42,6 +42,16 @@ export class OverlayHandler {
     static hideOverlay() {
         $('#overlay').find('ul').addClass('hidden');
     }
+
+    static search(term) {
+        let hills = $('#overlay ul li').each(function(i, li) {
+            if ($(li).text().toLowerCase().indexOf(term.toLowerCase()) === -1) {
+                $(li).hide();
+            } else {
+                $(li).show();
+            }
+        });
+    }
 }
 
 window.OverlayHandler = OverlayHandler;

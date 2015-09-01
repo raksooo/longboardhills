@@ -1,5 +1,5 @@
 var storage = require('node-persist'),
-    md5 = require('md5');
+    md5 = require('md5'),
     bodyParser = require('body-parser'),
     serveStatic = require('serve-static'),
     express = require('express'),
@@ -22,12 +22,14 @@ app.get('/getHills', (req, res) => {
     res.json(hills);
 });
 
-app.get('/removeHill', (req, res) => {
+app.post('/removeHill', (req, res) => {
     if (md5(req.body.password) === '534488729ab74ff059356cb58c9907ef') {
         hills.splice(req.body.index, 1);
         persist();
+        res.end('success');
+    } else {
+        res.end('wrong password');
     }
-    res.end();
 });
 
 app.post('/addHill', (req, res) => {

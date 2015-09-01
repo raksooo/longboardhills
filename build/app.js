@@ -164,7 +164,7 @@ var _overlayHandler = require('./overlayHandler');
 
 var _mapHandler = require('./mapHandler');
 
-window.difficultyColors = ["#2E7D32", "#558B2F", "#9E9D24", "#F9A825", "#FF8F00", "#EF6C00", "#D84315", "#C62828", "#283593", "#111111"];
+window.difficultyColors = ["#2E7D32", "#558B2F", "#9E9D24", "#F9A825", "#FF8F00", "#EF6C00", "#D84315", "#C62828", "#283593", "#111111", "#000000"];
 
 var HillLoader = (function () {
     function HillLoader() {
@@ -188,9 +188,8 @@ var HillLoader = (function () {
     }, {
         key: 'loadHill',
         value: function loadHill(hill) {
-            // TODO: Ta bort senare när formuläret är fixat.
-            if (hill.difficulty === "") {
-                hill.difficulty = 1;
+            if (hill.difficulty === 0) {
+                hill.difficulty = 11;
             }
             var line = this.drawPoly(hill.path, hill.difficulty);
 
@@ -370,6 +369,17 @@ var OverlayHandler = (function () {
         key: 'hideOverlay',
         value: function hideOverlay() {
             $('#overlay').find('ul').addClass('hidden');
+        }
+    }, {
+        key: 'search',
+        value: function search(term) {
+            var hills = $('#overlay ul li').each(function (i, li) {
+                if ($(li).text().toLowerCase().indexOf(term.toLowerCase()) === -1) {
+                    $(li).hide();
+                } else {
+                    $(li).show();
+                }
+            });
         }
     }]);
 
