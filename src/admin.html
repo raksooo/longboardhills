@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin</title>
+        <meta charset="utf-8">
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            $(function() {
+                $.getJSON('/getHills', function(hills) {
+                    $.each(hills, function(i, hill) {
+                        var li = $('<li>' + hill.name + ' | </li>');
+                        var a = $('<a href="#" onclick="removeHill(' + i + ');">Remove</a>');
+                        li.append(a);
+                        $('ul').append(li);
+                    });
+                });
+            });
+
+            function removeHill(i) {
+                var data = {
+                    index: i,
+                    password: $('#password').val()
+                }
+                $.post('/removeHill', data, function(res) {
+                    if (res === 'success') {
+                        $('li').eq(i).remove();
+                        $('#password').css('background', 'white');
+                    } else {
+                        $('#password').css('background', 'red');
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        Password: <input type="password" id="password" />
+        <ul>
+        </ul>
+    </body>
+</html>
