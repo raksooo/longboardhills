@@ -364,12 +364,14 @@ var OverlayHandler = (function () {
         key: 'showOverlay',
         value: function showOverlay() {
             $('#overlay').find('ul').removeClass('hidden');
+            $('#openSearch').show();
         }
     }, {
         key: 'hideOverlay',
         value: function hideOverlay() {
             $('#overlay').find('ul').addClass('hidden');
             $('#overlay').find('input#search').addClass('hidden');
+            $('#openSearch').hide();
         }
     }, {
         key: 'toggleSearch',

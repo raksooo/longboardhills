@@ -37,11 +37,13 @@ export class OverlayHandler {
 
     static showOverlay() {
         $('#overlay').find('ul').removeClass('hidden');
+        $('#openSearch').show();
     }
 
     static hideOverlay() {
         $('#overlay').find('ul').addClass('hidden');
         $('#overlay').find('input#search').addClass('hidden');
+        $('#openSearch').hide();
     }
 
     static toggleSearch() {
