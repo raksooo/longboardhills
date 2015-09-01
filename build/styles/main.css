@@ -48,14 +48,17 @@
       padding-right: 10px;
       color: #444444;
       box-sizing: border-box;
-      background: rgba(255, 255, 255, 0.7);
+      padding: 0 20px 0 20px;
+      background: transparent;
+      color: #e8e8e8;
+      outline: none !important;
       transition: height 40ms linear; }
       #overlay #searchDiv input.hidden {
         height: 0px;
         padding: 0; }
       #overlay #searchDiv input + div {
         position: absolute;
-        right: 10px;
+        right: 15px;
         top: 14px;
         font-family: Oxygen;
         width: 17px;

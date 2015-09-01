@@ -45,7 +45,10 @@
 
         input {
             @include textinput();
-            background: rgba(255, 255, 255, 0.7);
+            padding: 0 20px 0 20px;
+            background: transparent;
+            color: #e8e8e8;
+            outline: none !important;
             transition: height 40ms linear;
 
             &.hidden {
@@ -55,7 +58,7 @@
 
             + div {
                 position: absolute;
-                right: 10px;
+                right: 15px;
                 top: 14px;
                 font-family: Oxygen;
                 width: 17px;
