@@ -4,6 +4,7 @@
         "node-persist": "latest",
         "body-parser": "latest",
         "server-static": "latest",
+        "md5": "latest",
         "express": "latest"
     },
     "scripts": {
