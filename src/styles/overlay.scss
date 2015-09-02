@@ -35,9 +35,18 @@
     }
 
     .titleControl#openSearch {
-        font-size: 24px;
-        padding-top: 5px;
-        transform: rotateZ(45deg);
+        font-size: 18px;
+        padding-top: 3px;
+
+        &.open {
+            padding-right: 17px;
+        }
+
+        &:not(.open) {
+            font-size: 24px;
+            padding-top: 5px;
+            transform: rotateZ(45deg);
+        }
     }
 
     #searchDiv {
@@ -59,7 +68,7 @@
             + div {
                 position: absolute;
                 right: 15px;
-                top: 14px;
+                top: 12px;
                 font-family: Oxygen;
                 width: 17px;
                 height: 17px;
