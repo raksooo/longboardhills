@@ -33,9 +33,14 @@
     padding-right: 15px;
     padding-left: 3px; }
   #overlay .titleControl#openSearch {
-    font-size: 24px;
-    padding-top: 5px;
-    transform: rotateZ(45deg); }
+    font-size: 18px;
+    padding-top: 3px; }
+    #overlay .titleControl#openSearch.open {
+      padding-right: 17px; }
+    #overlay .titleControl#openSearch:not(.open) {
+      font-size: 24px;
+      padding-top: 5px;
+      transform: rotateZ(45deg); }
   #overlay #searchDiv {
     position: relative; }
     #overlay #searchDiv input {
@@ -59,7 +64,7 @@
       #overlay #searchDiv input + div {
         position: absolute;
         right: 15px;
-        top: 14px;
+        top: 12px;
         font-family: Oxygen;
         width: 17px;
         height: 17px;

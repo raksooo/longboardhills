@@ -379,9 +379,13 @@ var OverlayHandler = (function () {
             var search = $('#overlay #search');
             if (search.hasClass('hidden')) {
                 search.removeClass('hidden');
+                $('#openSearch').text('^');
+                $('#openSearch').addClass('open');
                 search.focus();
             } else {
                 search.addClass('hidden');
+                $('#openSearch').text('⚲');
+                $('#openSearch').removeClass('open');
                 OverlayHandler.emptySearch();
             }
         }
