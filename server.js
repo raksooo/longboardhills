@@ -35,11 +35,18 @@ app.post('/removeHill', (req, res) => {
 });
 
 app.post('/addHill', (req, res) => {
-    var hill = JSON.parse(req.body.hill);
+    var hill = req.body.hill;
+    parseCoordinates(hill);
     hills.push(hill);
     persist();
     res.end();
 });
+
+function parseCoordinates(hill) {
+    hill.path = hill.path.map(point => {
+        return {lat: parseFloat(point.lat), lng: parseFloat(point.lng)}
+    });
+}
 
 function persist() {
     storage.setItem('hills', hills);

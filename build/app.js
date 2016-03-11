@@ -35,7 +35,7 @@ var FormHandler = function () {
     }, {
         key: 'post',
         value: function post(hill) {
-            var data = { hill: JSON.stringify(hill) };
+            var data = { hill: hill };
             var hillLoader = new _hillLoader.HillLoader();
             $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
             FormHandler.hideForm();
@@ -123,7 +123,7 @@ var HillCreator = function () {
             routeParser.newRoute(url, function (hill) {
                 _this.hill = hill;
                 _this.fixLatLng();
-                callback(hill.path);
+                callback(_this.hill.path);
             });
         }
     }, {
@@ -138,8 +138,8 @@ var HillCreator = function () {
     }, {
         key: 'fixLatLng',
         value: function fixLatLng() {
-            this.hill.path = $.map(this.hill.path, function (point) {
-                return { lat: point.G, lng: point.K };
+            this.hill.path = this.hill.path.map(function (point) {
+                return { lat: point.lat(), lng: point.lng() };
             });
         }
     }]);
@@ -279,12 +279,13 @@ var MapHandler = exports.MapHandler = function () {
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             streetViewControl: true,
             panControl: false,
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
             mapTypeControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP,
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.TERRAIN],
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            },
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
             }
         };
         this.map = new google.maps.Map(mapCanvas, mapOptions);
@@ -463,7 +464,8 @@ function getPath(instructions, callback) {
         waypoints: instructions.waypoints,
         optimizeWaypoints: false
     }, function (response, status) {
-        callback(response.routes[0].overview_path);
+        var route = response.routes[0];
+        callback(route.overview_path);
     });
 }
 

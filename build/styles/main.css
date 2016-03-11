@@ -42,7 +42,8 @@
       padding-top: 5px;
       transform: rotateZ(45deg); }
   #overlay #searchDiv {
-    position: relative; }
+    position: relative;
+    overflow: hidden; }
     #overlay #searchDiv input {
       display: block;
       width: 100%;

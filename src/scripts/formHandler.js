@@ -16,7 +16,7 @@ class FormHandler {
     }
 
     static post(hill) {
-        let data = {hill: JSON.stringify(hill)};
+        let data = {hill: hill};
         let hillLoader = new HillLoader();
         $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
         FormHandler.hideForm();
@@ -89,9 +89,9 @@ class HillCreator {
 
     retrievePath(url, callback) {
         routeParser.newRoute(url, hill => {
-            this.hill = hill;
+            this.hill = hill
             this.fixLatLng();
-            callback(hill.path);
+            callback(this.hill.path);
         });
     }
 
@@ -104,8 +104,8 @@ class HillCreator {
     }
 
     fixLatLng() {
-        this.hill.path = $.map(this.hill.path, point => {
-            return {lat: point.G, lng: point.K};
+        this.hill.path = this.hill.path.map(point => {
+            return {lat: point.lat(), lng: point.lng()};
         });
     }
 }

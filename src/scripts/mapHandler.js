@@ -9,16 +9,17 @@ export class MapHandler {
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             streetViewControl: true,
             panControl: false,
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
             mapTypeControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP,
                 mapTypeIds: [
                     google.maps.MapTypeId.ROADMAP,
                     google.maps.MapTypeId.SATELLITE,
                     google.maps.MapTypeId.TERRAIN
                 ],
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            },
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
             }
         }
         this.map = new google.maps.Map(mapCanvas, mapOptions);

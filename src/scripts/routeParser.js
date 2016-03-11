@@ -7,8 +7,8 @@ $(function (){
 
 export function newRoute(url, callback) {
     var instructions = gMapsUrlPointParser(url);
-    getPath(instructions, function(path) {
-        calculateElevation(instructions, function(decline) {
+    getPath(instructions, path => {
+        calculateElevation(instructions, decline => {
             var hill = {
                 path: path,
                 decline: decline,
@@ -39,13 +39,14 @@ function getPath(instructions, callback) {
         waypoints: instructions.waypoints,
         optimizeWaypoints: false,
     }, function(response, status) {
-        callback(response.routes[0].overview_path);
+        var route = response.routes[0];
+        callback(route.overview_path);
     });
 }
 
 function calculateElevation(directions, callback) {
     var locations = {locations: [directions.origin, directions.destination]};
-    elevator.getElevationForLocations(locations, function(elevation, eStatus) {
+    elevator.getElevationForLocations(locations, (elevation, eStatus) => {
         var decline = Math.round(Math.abs(elevation[0].elevation - elevation[1].elevation));
         callback(decline);
     });
@@ -102,14 +103,14 @@ function gMapsUrlPointParser(url, callback) {
     return directions;
 }
 
-google.maps.Polyline.prototype.inMeters = function(n){
+google.maps.Polyline.prototype.inMeters = function(n) {
     var a = this.getPath(n), len = a.getLength(), dist = 0;
     for(var i=0; i<len-1; i++){
         dist += a.getAt(i).metersTo(a.getAt(i+1));
     }
     return dist;
 }
-google.maps.LatLng.prototype.metersTo = function(a){
+google.maps.LatLng.prototype.metersTo = function(a) {
     var e = Math, ra = e.PI/180;
     var b = this.lat() * ra, c = a.lat() * ra, d = b - c;
     var g = this.lng() * ra - a.lng() * ra;

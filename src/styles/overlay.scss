@@ -51,6 +51,7 @@
 
     #searchDiv {
         position: relative;
+        overflow: hidden;
 
         input {
             @include textinput();
