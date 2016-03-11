@@ -1,3 +1,5 @@
+"use strict"
+
 var storage = require('node-persist'),
     md5 = require('md5'),
     bodyParser = require('body-parser'),

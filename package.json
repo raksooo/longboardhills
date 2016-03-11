@@ -1,18 +1,21 @@
 {
-    "name": "LongboardHills",
-    "devDependencies": {
-        "babel": "latest",
-        "node-persist": "latest",
-        "body-parser": "latest",
-        "serve-static": "latest",
-        "md5": "latest",
-        "express": "latest"
-    },
-    "scripts": {
-        "build": "browserify src/scripts/main.js -t babelify -o build/app.js",
-        "watch-js": "watchify src/scripts/main.js -t babelify -o build/app.js",
-        "watch-css": "sass --watch src/styles/main.scss:build/styles/main.css",
-        "watch": "npm run watch-js & npm run watch-css & npm start",
-        "start": "babel-node server.js"
-    }
+  "name": "LongboardHills",
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-preset-es2015": "latest",
+    "babelify": "latest",
+    "watchify": "latest",
+    "body-parser": "latest",
+    "express": "latest",
+    "md5": "latest",
+    "node-persist": "latest",
+    "serve-static": "latest"
+  },
+  "scripts": {
+    "build": "browserify src/scripts/main.js -t babelify -o build/app.js",
+    "watch-js": "watchify src/scripts/main.js -o build/app.js -t [ babelify --presets [ es2015 ] ]",
+    "watch-css": "sass --watch src/styles/main.scss:build/styles/main.css",
+    "watch": "npm run watch-js & npm run watch-css & npm start",
+    "start": "node server.js"
+  }
 }

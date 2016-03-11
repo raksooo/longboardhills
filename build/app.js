@@ -1,21 +1,21 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+var _routeParser = require('./routeParser.js');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var routeParser = _interopRequireWildcard(_routeParser);
 
-var _routeParserJs = require('./routeParser.js');
+var _hillLoader = require('./hillLoader.js');
 
-var routeParser = _interopRequireWildcard(_routeParserJs);
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var _hillLoaderJs = require('./hillLoader.js');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var newHill;
 
-var FormHandler = (function () {
+var FormHandler = function () {
     function FormHandler() {
         _classCallCheck(this, FormHandler);
     }
@@ -36,7 +36,7 @@ var FormHandler = (function () {
         key: 'post',
         value: function post(hill) {
             var data = { hill: JSON.stringify(hill) };
-            var hillLoader = new _hillLoaderJs.HillLoader();
+            var hillLoader = new _hillLoader.HillLoader();
             $.post('/addHill', data, hillLoader.loadHill.bind(hillLoader, hill));
             FormHandler.hideForm();
         }
@@ -108,9 +108,9 @@ var FormHandler = (function () {
     }]);
 
     return FormHandler;
-})();
+}();
 
-var HillCreator = (function () {
+var HillCreator = function () {
     function HillCreator() {
         _classCallCheck(this, HillCreator);
     }
@@ -145,28 +145,29 @@ var HillCreator = (function () {
     }]);
 
     return HillCreator;
-})();
+}();
 
 window.FormHandler = FormHandler;
 
 },{"./hillLoader.js":2,"./routeParser.js":6}],2:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.HillLoader = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _overlayHandler = require('./overlayHandler');
 
 var _mapHandler = require('./mapHandler');
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 window.difficultyColors = ["#2E7D32", "#558B2F", "#9E9D24", "#F9A825", "#FF8F00", "#EF6C00", "#D84315", "#C62828", "#283593", "#111111", "#000000"];
 
-var HillLoader = (function () {
+var HillLoader = exports.HillLoader = function () {
     function HillLoader() {
         _classCallCheck(this, HillLoader);
 
@@ -179,11 +180,11 @@ var HillLoader = (function () {
         value: function loadHills() {
             var _this = this;
 
-            $.get('/getHills', (function (data) {
-                $.each(data, (function (i, hill) {
+            $.get('/getHills', function (data) {
+                $.each(data, function (i, hill) {
                     _this.loadHill(hill);
-                }).bind(_this));
-            }).bind(this));
+                }.bind(_this));
+            }.bind(this));
         }
     }, {
         key: 'loadHill',
@@ -227,20 +228,18 @@ var HillLoader = (function () {
     }]);
 
     return HillLoader;
-})();
-
-exports.HillLoader = HillLoader;
+}();
 
 },{"./mapHandler":4,"./overlayHandler":5}],3:[function(require,module,exports){
 'use strict';
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 require('./formHandler');
 
 var _hillLoader = require('./hillLoader');
 
 var _mapHandler = require('./mapHandler');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var hillLoader;
 
@@ -259,17 +258,17 @@ var Main = function Main() {
 },{"./formHandler":1,"./hillLoader":2,"./mapHandler":4}],4:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var instance;
 
-var MapHandler = (function () {
+var MapHandler = exports.MapHandler = function () {
     function MapHandler() {
         _classCallCheck(this, MapHandler);
 
@@ -302,26 +301,25 @@ var MapHandler = (function () {
     }]);
 
     return MapHandler;
-})();
-
-exports.MapHandler = MapHandler;
+}();
 
 },{}],5:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.OverlayHandler = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _mapHandler = require('./mapHandler');
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var instance;
 
-var OverlayHandler = (function () {
+var OverlayHandler = exports.OverlayHandler = function () {
     function OverlayHandler() {
         _classCallCheck(this, OverlayHandler);
 
@@ -413,16 +411,14 @@ var OverlayHandler = (function () {
     }]);
 
     return OverlayHandler;
-})();
-
-exports.OverlayHandler = OverlayHandler;
+}();
 
 window.OverlayHandler = OverlayHandler;
 
 },{"./mapHandler":4}],6:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.newRoute = newRoute;

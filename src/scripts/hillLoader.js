@@ -22,11 +22,11 @@ export class HillLoader {
     }
 
     loadHills() {
-        $.get('/getHills', data => {
-            $.each(data, (i, hill) => {
+        $.get('/getHills', (data => {
+            $.each(data, ((i, hill) => {
                 this.loadHill(hill);
-            }.bind(this));
-        }.bind(this));
+            }).bind(this));
+        }).bind(this));
     }
 
     loadHill(hill) {
