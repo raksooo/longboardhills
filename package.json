@@ -1,6 +1,7 @@
 {
   "name": "LongboardHills",
   "devDependencies": {
+    "browserify": "latest",
     "babelify": "latest",
     "babel-preset-es2015": "latest"
   },
