@@ -57,9 +57,9 @@ function emptyData() {
     persist();
 }
 
-var server = app.listen(3000, () => {
+var server = app.listen(8083, () => {
     let host = server.address().address;
     let port = server.address().port;
 
-    console.log('Listening at http://%s:%s', host, port);
+    console.log('Listening...');
 });

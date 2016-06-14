@@ -1,10 +1,10 @@
 {
   "name": "LongboardHills",
   "devDependencies": {
-    "babel-cli": "latest",
-    "babel-preset-es2015": "latest",
     "babelify": "latest",
-    "watchify": "latest",
+    "babel-preset-es2015": "latest"
+  },
+  "dependencies": {
     "body-parser": "latest",
     "express": "latest",
     "md5": "latest",
@@ -12,7 +12,7 @@
     "serve-static": "latest"
   },
   "scripts": {
-    "build": "browserify src/scripts/main.js -t babelify -o build/app.js",
+    "build": "browserify src/scripts/main.js -o build/app.js -t [ babelify --presets [ es2015 ] ]",
     "watch-js": "watchify src/scripts/main.js -o build/app.js -t [ babelify --presets [ es2015 ] ]",
     "watch-css": "sass --watch src/styles/main.scss:build/styles/main.css",
     "watch": "npm run watch-js & npm run watch-css & npm start",
